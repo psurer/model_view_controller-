@@ -1,7 +1,25 @@
-/* Your task this week is to build a CMS-style blog site similar to a Wordpress site,
-where developers can publish their blog posts and comment on other developers’ posts
-as well. You’ll build this site completely from scratch and deploy it to Heroku. 
-Your app will follow the MVC paradigm in its architectural structure, using
-Handlebars.js as the templating language, Sequelize as the ORM, and the express-session
-npm package for authentication */
-document.querySelector("h1").innerHTML = "Good Bye World";
+const express = require('express')
+var session = require('express-session');
+const app = express()
+const port = 3000
+
+app.use(session({resave: true, saveUninitialized: true, secret: 'XCR3rsasa%RDHHH', cookie: { maxAge: 60000 }}));
+app.use(express.static('public'));
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+
+
+var sessionData
+app.post('/account',function(req,res){
+  sessionData = req.session;
+  sessionData.user = {};
+  let username = "adam";
+  sessionData.user.username = username;
+  sessionData.user.password = password;
+   console.log("Setting session data:username=%s and salary=%s", sessionData.user.username, sessionData.user.password)
+ 
+ // res.end('Saved session and salary : ' + sessionData.username);
+ res.json(sessionData.user)
+});
